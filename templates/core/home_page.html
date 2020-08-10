@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+</head>
+<body style="margin: 2%">
+<h1> Список изображений</h1>
+<div>
+    {% if object_list|length > 0 %}
+        {% for item in object_list %}
+            <div style="margin: 1%; float: left">
+                <a href="{% url 'image-detail-page' item.slug %}"> <img src="{{ item.image.url }}" alt="image"
+                                                                        style="width:125px;height:125px;">
+                </a></div>
+        {% endfor %}
+    {% else %}
+        <h3> Нет доступных изображений</h3>
+    {% endif %}
+
+</div>
+<div style="clear: both">
+    <a href="{% url 'add-image-page' %}">Добавить изображение</a>
+    {% if is_paginated %}
+        <nav class="d-flex justify-content-center wow fadeIn">
+            <ul class="pagination pg-blue">
+
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Предыдущая страница</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}
+                        <span class="sr-only"></span>
+                    </a>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Следующая страница</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+</div>
+</body>
+
+</html>

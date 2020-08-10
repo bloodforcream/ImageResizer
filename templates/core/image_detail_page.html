@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="margin: 2%">
+{% include 'core/wrapper.html' %}
+<div>
+    {% if resized_image %}
+        <img id="now" style="max-width: 100%; width: auto;" alt="" src="data:image/png;base64,{{ resized_image }}"/>
+    {% else %}
+        <img src="{{ object.image.url }}" alt="Image">
+    {% endif %}
+</div>
+<div>
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            {{ form.as_p }}
+        </p>
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+<div>
+    {% if errors %}
+        {% for error in errors %}
+            <div>
+                {{ error.data }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+</body>
+</html>
